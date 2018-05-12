@@ -1,4 +1,5 @@
 const axios = require("axios");
+const qs = require('qs');
 const tools = require("tron-http-tools");
 const config = require("./config.json");
 
@@ -30,11 +31,17 @@ module.exports = class{
             let nowBlock = await axios.get(this.url + "/getLastBlock").then(r => tools.blocks.blockFromBase64(r.data));
 
             let myAddress = tools.accounts.privateKeyToAddress(privateKey);
+
             let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
            let signed = tools.transactions.signTransaction(privateKey, unsigned);
-
            let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
-           return await axios.post(this.url + "/broadcastTransaction", {transaction : base64Signed}).then(r => tools.api.responseFromBase64(r));
+
+           let response = await axios.post(this.url + "/broadcastTransaction", qs.stringify({transaction:base64Signed}));
+           let decoded = tools.api.returnFromBase64(response.data).toObject();
+           if(decoded && !decoded.result)
+               decoded.message = Buffer.from(decoded.message, 'base64').toString();
+
+           return decoded;
         });
     }
 
