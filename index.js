@@ -41,7 +41,7 @@ module.exports = class{
            if(decoded && !decoded.result)
                decoded.message = Buffer.from(decoded.message, 'base64').toString();
 
-           return decoded;
+           resolve(decoded);
         });
     }
 
@@ -70,7 +70,7 @@ async function testSend(){
         "27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn",
         1000000
     );
-    console.log(sendResponse.toObject());
+    console.log(sendResponse);
 }
 
 testSend();
