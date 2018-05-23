@@ -28,6 +28,10 @@ module.exports = class{
         return await axios.get(this.url + "/grpc/getLastBlock").then(r => tools.blocks.blockFromBase64(r.data));
     }
 
+    async listWitnesses(){
+        return await axios.get(this.url + "/grpc/listWitnesses").then(r => tools.witnesses.witnessesFromWitnessListBase64(r.data));
+    }
+
     /*********************************************
      ************ API USING OUR DB ***************
      ********************************************/
@@ -66,54 +70,5 @@ module.exports = class{
             resolve(decoded);
         });
     }
+};
 
-
-}
-
-let client = new module.exports();
-
-async function testAccount(){
-    console.log("proto");
-    let accountProto = await client.getAccountProto("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log(accountProto);
-    console.log("obj");
-    let accountObj = await client.getAccountObj("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log(accountObj);
-}
-
-async function testTransaction(){
-    console.log("proto");
-    let listProto = await client.getTransactionsFromThisProto("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log(listProto);
-}
-
-async function testSend(){
-    let sendResponse = await client.sendTrx(
-        "6D65629F6A1F79E2B277604F7A362AD9CE83B06E9EB8F007D8B682E389662097",
-        "27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn",
-        1000000
-    );
-    console.log(sendResponse);
-}
-
-async function testGetLastBlock(){
-    let block = await client.getLastBlock();
-    let transactions = block.toObject();
-
-    console.log(transactions);
-}
-//testSend();
-//testGetLastBlock();
-
-async function testHttpApi(){
-    let account = await client.getAccount("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log(account);
-    let transactionsTo = await client.getTransactionsToThis("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log('to:');
-    console.log(transactionsTo);
-    let transactionsFrom = await client.getTransactionsFromThis("27aqorRGesA7ptBpy2QYTaQBa5TQAg5sGbn");
-    console.log('from:');
-    console.log(transactionsFrom);
-}
-
-//testHttpApi();
