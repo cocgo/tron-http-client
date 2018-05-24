@@ -18,6 +18,6 @@
   "homepage": "https://github.com/Flott-org/tron-http-client#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "tron-http-tools": "github:Flott-org/tron-http-tools"
+    "tron-http-tools": "tronwatch/tron-http-tools"
   }
 }
