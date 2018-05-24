@@ -48,6 +48,10 @@ module.exports = class{
         return await axios.get(this.url + "/getTransactionsFromThis?address=" + address).then(x => x.data);
     }
 
+    async getTokens(){
+        return await axios.get(this.url + "/getTokens").then(x => x.data);
+    }
+
     /*********************************************
      *********** TRON FUNCTIONALITY **************
      ********************************************/
