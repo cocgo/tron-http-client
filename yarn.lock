@@ -223,6 +223,14 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
+convert-hex@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/convert-hex/-/convert-hex-0.1.0.tgz#08c04568922c27776b8a2e81a95d393362ea0b65"
+
+convert-string@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/convert-string/-/convert-string-0.1.0.tgz#79ce41a9bb0d03bcf72cdc6a8f3c56fbbc64410a"
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -983,6 +991,13 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+sha256@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/sha256/-/sha256-0.2.0.tgz#73a0b418daab7035bff86e8491e363412fc2ab05"
+  dependencies:
+    convert-hex "~0.1.0"
+    convert-string "~0.1.0"
+
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
@@ -1102,12 +1117,13 @@ traverse@^0.6.6:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
 tron-http-tools@tronwatch/tron-http-tools:
-  version "1.0.1"
-  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/09e3bd1a6a40c6d0fdcebbc0e0a13eab3a22f570"
+  version "1.0.2"
+  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/9fa179c3981004349b2086e384d9ce0a0b9e7472"
   dependencies:
     "@tronprotocol/wallet-api" "0.0.35"
     bip39 "2.5.0"
     btoa "^1.2.1"
+    sha256 "^0.2.0"
     text-encoding "^0.6.4"
 
 tunnel-agent@^0.6.0:
