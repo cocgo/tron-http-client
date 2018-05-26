@@ -40,6 +40,10 @@ module.exports = class{
         return await axios.get(this.url + "/getAccount?address=" + address).then(x => x.data);
     }
 
+    async getAccounts(addresses){
+        return await axios.get(this.url + "/getAccounts?addresses=" + addresses.join(",")).then(x => x.data);
+    }
+
     async getTransactionsToThis(address){
         return await axios.get(this.url + "/getTransactionsToThis?address=" + address).then(x => x.data);
     }

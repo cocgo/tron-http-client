@@ -1,6 +1,6 @@
 {
   "name": "tron-http-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Flott-org/tron-http-client.git"
+    "url": "git+https://github.com/TronWatch/tron-http-client.git"
   },
   "author": "tron.watch",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/Flott-org/tron-http-client/issues"
+    "url": "https://github.com/TronWatch/tron-http-client/issues"
   },
-  "homepage": "https://github.com/Flott-org/tron-http-client#readme",
+  "homepage": "https://github.com/TronWatch/tron-http-client#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "tron-http-tools": "tronwatch/tron-http-tools"
