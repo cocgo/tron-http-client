@@ -1,7 +1,7 @@
 const axios = require("axios");
 const qs = require('qs');
-const tools = require("tron-http-tools");
 const config = require("./config.json");
+const tools = require("tron-http-tools");
 
 module.exports = class{
 
@@ -65,22 +65,37 @@ module.exports = class{
      ********************************************/
 
     async sendTrx(privateKey, recipient, amount){
-        return new Promise(async (resolve, reject) => {
-            let nowBlock = await this.getLastBlock();
+        let nowBlock = await this.getLastBlock();
 
-            let myAddress = tools.accounts.privateKeyToAddress(privateKey);
+        let myAddress = tools.accounts.privateKeyToAddress(privateKey);
 
-            let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
-            let signed = tools.transactions.signTransaction(privateKey, unsigned);
-            let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
+        let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
+        let signed = tools.transactions.signTransaction(privateKey, unsigned);
+        let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
+        console.log(base64Signed);
 
-            let response = await axios.post(this.url + "/broadcastTransaction", qs.stringify({transaction:base64Signed}));
-            let decoded = tools.api.returnFromBase64(response.data).toObject();
-            if(decoded && !decoded.result)
-                decoded.message = Buffer.from(decoded.message, 'base64').toString();
+        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
+        let decoded = tools.api.returnFromBase64(response.data).toObject();
+        if(decoded && !decoded.result)
+            decoded.message = Buffer.from(decoded.message, 'base64').toString();
 
-            resolve(decoded);
-        });
+        return decoded;
+    }
+
+    async sendNameChange(privateKey, newName){
+        let nowBlock = await this.getLastBlock();
+
+        let myAddress = tools.accounts.privateKeyToAddress(privateKey);
+
+        let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
+        let signed = tools.transactions.signTransaction(privateKey, unsigned);
+        let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
+
+        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
+        let decoded = tools.api.returnFromBase64(response.data).toObject();
+        if(decoded && !decoded.result)
+            decoded.message = Buffer.from(decoded.message, 'base64').toString();
+
+        return decoded;
     }
 };
-
