@@ -1,8 +1,7 @@
 const axios = require("axios");
 const qs = require('qs');
 const config = require("./config.json");
-const tools = require("../tron-http-tools");
-const assert = require('assert');
+const tools = require("tron-http-tools");
 
 module.exports = class{
 
