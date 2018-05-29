@@ -1,7 +1,8 @@
 const axios = require("axios");
 const qs = require('qs');
 const config = require("./config.json");
-const tools = require("tron-http-tools");
+const tools = require("../tron-http-tools");
+const assert = require('assert');
 
 module.exports = class{
 
@@ -64,38 +65,93 @@ module.exports = class{
      *********** TRON FUNCTIONALITY **************
      ********************************************/
 
+    async signAndBroadcastTransaction(privateKey, unsigned){
+        let signed = tools.transactions.signTransaction(privateKey, unsigned);
+        let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
+        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
+        let decoded = tools.api.returnFromBase64(response.data).toObject();
+        if(decoded && !decoded.result)
+            decoded.message = Buffer.from(decoded.message, 'base64').toString();
+        return decoded;
+    }
+
     async sendTrx(privateKey, recipient, amount){
         let nowBlock = await this.getLastBlock();
-
         let myAddress = tools.accounts.privateKeyToAddress(privateKey);
-
-        let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
-        let signed = tools.transactions.signTransaction(privateKey, unsigned);
-        let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
-        console.log(base64Signed);
-
-        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
-        let decoded = tools.api.returnFromBase64(response.data).toObject();
-        if(decoded && !decoded.result)
-            decoded.message = Buffer.from(decoded.message, 'base64').toString();
-
-        return decoded;
+        console.log(myAddress);
+        let props = {
+            sender : myAddress,
+            recipient : recipient,
+            amount : amount
+        };
+        let unsigned = await tools.transactions.createUnsignedTransferTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 
-    async sendNameChange(privateKey, newName){
+    async issueAsset(privateKey, props){
         let nowBlock = await this.getLastBlock();
+        props.sender = tools.accounts.privateKeyToAddress(privateKey);
 
-        let myAddress = tools.accounts.privateKeyToAddress(privateKey);
+        let unsigned = await tools.transactions.createUnsignedAssetIssueTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
+    }
 
-        let unsigned = await tools.transactions.createUnsignedTransferTransaction(myAddress, recipient, amount, nowBlock);//why does this need an await? maybe i'm too tired
-        let signed = tools.transactions.signTransaction(privateKey, unsigned);
-        let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
+    async freezeTrx(privateKey, amount, duration=3){
+        let nowBlock = await this.getLastBlock();
+        let props = {
+            ownerAddress : tools.accounts.privateKeyToAddress(privateKey),
+            amount : amount,
+            duration : duration
+        };
 
-        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
-        let decoded = tools.api.returnFromBase64(response.data).toObject();
-        if(decoded && !decoded.result)
-            decoded.message = Buffer.from(decoded.message, 'base64').toString();
+        let unsigned = await tools.transactions.createUnsignedFreezeBalanceTransaction(props, nowBlock);
+        console.log(unsigned.toObject());
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
+    }
 
-        return decoded;
+    async unfreezeTrx(privateKey){
+        let nowBlock = await this.getLastBlock();
+        let props = {
+            ownerAddress : tools.accounts.privateKeyToAddress(privateKey),
+        };
+
+        let unsigned = await tools.transactions.createUnsignedUnfreezeBalanceTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 };
+
+/*
+let client = new module.exports();
+function testSend(){
+    client.sendTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68","27d3byPxZXKQWfXX7sJvemJJuv5M65F3vjS",5);
+}
+
+async function testCreateToken(){
+    let startTime = Date.now() + (60*1000);
+    let endTime = Date.now() + (60*1000*60*24);
+
+    let props = {
+        assetName : "TronWatchTest",
+        assetAbbr : "TWT",
+        totalSupply : 5000000,
+        num : 1,
+        trxNum : 1,
+        endTime : endTime,
+        startTime : startTime,
+        description : "test token description here",
+        url : "https://tron.watch"
+    };
+
+    let response = await client.issueAsset("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", props);
+    console.log(response);
+}
+async function testFreezing(){
+    let response = await client.freezeTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", 5000);
+    console.log(response);
+}
+
+//testSend();
+//testCreateToken();
+
+testFreezing();
+*/
