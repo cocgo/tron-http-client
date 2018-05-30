@@ -131,8 +131,56 @@ module.exports = class{
         let unsigned = await tools.transactions.createUnsignedUnfreezeBalanceTransaction(props, nowBlock);
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
+
+    async participateToken(privateKey, props){
+        let nowBlock = await this.getLastBlock();
+        props.sender = tools.accounts.privateKeyToAddress(privateKey);
+
+        let unsigned = await tools.transactions.createUnsignedParticipateAssetIssueTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
+    }
+
+    async vote(privateKey, votes){
+        let nowBlock = await this.getLastBlock();
+        let props = {
+            votes : votes,
+            ownerAddress: tools.accounts.privateKeyToAddress(privateKey)
+        };
+
+        let unsigned = await tools.transactions.createUnsignedVoteWitnessTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
+    }
 };
 
+
+/*
+let client = new module.exports();
+async function testVotes(){
+    let votes = [
+        {
+            address : "27WPirKuXZgSdFMra7K2HWUptWjxSTgqy51",
+            count : 100
+        }
+    ];
+
+    let response = await client.vote("639044ccb48a99b9f1f1818b43f58f0df53fba261ea9fa59c067c04fd7c2dbd7", votes);
+    console.log(response);
+}
+testVotes();
+*/
+
+/*
+async function testParticipate(){
+    let props = {
+        recipient:"27W7WoiSznCgzHuGE2zTYXrnhcUoxG7iVYx",
+        assetName: "Eureka",
+        amount : 1000000
+    };
+    response = await client.participateToken("639044ccb48a99b9f1f1818b43f58f0df53fba261ea9fa59c067c04fd7c2dbd7",props);
+    console.log(response);
+}
+testParticipate();
+*/
 /*
 let client = new module.exports();
 async function testTokenSend(){
