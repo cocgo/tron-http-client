@@ -1126,8 +1126,8 @@ traverse@^0.6.6:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
 tron-http-tools@tronwatch/tron-http-tools:
-  version "1.0.13"
-  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/c895011893031b1a485c774deb760a6664c1e0b8"
+  version "1.0.14"
+  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/e928461f159c1d7bce60e80ac94d1cffaf0952fd"
   dependencies:
     "@tronprotocol/wallet-api" "0.0.35"
     assert "^1.4.1"
