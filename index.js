@@ -87,6 +87,20 @@ module.exports = class{
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 
+    async sendToken(privateKey, recipient, amount, token){
+        let nowBlock = await this.getLastBlock();
+        let myAddress = tools.accounts.privateKeyToAddress(privateKey);
+        console.log(myAddress);
+        let props = {
+            sender : myAddress,
+            recipient : recipient,
+            amount : amount,
+            assetName: token
+        };
+        let unsigned = await tools.transactions.createUnsignedTransferAssetTransaction(props, nowBlock);
+        return this.signAndBroadcastTransaction(privateKey, unsigned);
+    }
+
     async issueAsset(privateKey, props){
         let nowBlock = await this.getLastBlock();
         props.sender = tools.accounts.privateKeyToAddress(privateKey);
@@ -121,6 +135,16 @@ module.exports = class{
 
 /*
 let client = new module.exports();
+async function testTokenSend(){
+   client.sendToken("639044ccb48a99b9f1f1818b43f58f0df53fba261ea9fa59c067c04fd7c2dbd7","27d3byPxZXKQWfXX7sJvemJJuv5M65F3vjS",1,"TestTokenOne");
+
+}
+testTokenSend();
+
+*/
+
+
+/*
 function testSend(){
     client.sendTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68","27d3byPxZXKQWfXX7sJvemJJuv5M65F3vjS",5);
 }
