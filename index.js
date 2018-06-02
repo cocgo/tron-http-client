@@ -1,7 +1,7 @@
 const axios = require("axios");
 const qs = require('qs');
 const config = require("./config.json");
-const tools = require("../tron-http-tools");
+const tools = require("tron-http-tools");
 
 module.exports = class{
 
@@ -77,7 +77,6 @@ module.exports = class{
     async sendTrx(privateKey, recipient, amount){
         let nowBlock = await this.getLastBlock();
         let myAddress = tools.accounts.privateKeyToAddress(privateKey);
-        console.log(myAddress);
         let props = {
             sender : myAddress,
             recipient : recipient,
@@ -90,7 +89,6 @@ module.exports = class{
     async sendToken(privateKey, recipient, amount, token){
         let nowBlock = await this.getLastBlock();
         let myAddress = tools.accounts.privateKeyToAddress(privateKey);
-        console.log(myAddress);
         let props = {
             sender : myAddress,
             recipient : recipient,
@@ -118,7 +116,6 @@ module.exports = class{
         };
 
         let unsigned = await tools.transactions.createUnsignedFreezeBalanceTransaction(props, nowBlock);
-        console.log(unsigned.toObject());
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 
@@ -191,11 +188,16 @@ testTokenSend();
 
 */
 
+/*
+let client = new module.exports();
+async function testSend(){
+    let response = await client.sendTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68","TYmYLaYQxqTFg9zW4mXyBR69oa1kb8o2yQ",5);
+    console.log(response);
+}
+testSend();
+*/
 
 /*
-function testSend(){
-    client.sendTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68","27d3byPxZXKQWfXX7sJvemJJuv5M65F3vjS",5);
-}
 
 async function testCreateToken(){
     let startTime = Date.now() + (60*1000);
@@ -216,8 +218,12 @@ async function testCreateToken(){
     let response = await client.issueAsset("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", props);
     console.log(response);
 }
+*/
+
+/*
+let client = new module.exports();
 async function testFreezing(){
-    let response = await client.freezeTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", 5000);
+    let response = await client.freezeTrx("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", 1000000);
     console.log(response);
 }
 
