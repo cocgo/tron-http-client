@@ -208,7 +208,7 @@ text-encoding@^0.6.4:
 
 tron-http-tools@tronwatch/tron-http-tools:
   version "1.0.19"
-  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/8d815b45d1013d9915e4a1ab8e21485e9ac5fd14"
+  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/4c12610faed7630cbf773e5505cccf6d42b23b54"
   dependencies:
     assert "^1.4.1"
     bip39 "2.3.0"
