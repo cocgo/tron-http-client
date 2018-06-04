@@ -197,27 +197,33 @@ async function testSend(){
 testSend();
 */
 
-/*
 
+/*
+let client = new module.exports();
 async function testCreateToken(){
     let startTime = Date.now() + (60*1000);
     let endTime = Date.now() + (60*1000*60*24);
 
     let props = {
-        assetName : "TronWatchTest",
-        assetAbbr : "TWT",
+        assetName : "TronWatchTestFrozenSupply",
+        assetAbbr : "TWT2",
         totalSupply : 5000000,
         num : 1,
         trxNum : 1,
         endTime : endTime,
         startTime : startTime,
         description : "test token description here",
-        url : "https://tron.watch"
+        url : "https://frozen.tron.watch",
+        frozenSupply : {
+            amount : 10000,
+            days : 5
+        }
     };
 
-    let response = await client.issueAsset("0e90a10554e94bff057c32227d020604ac8a8c7fe1849a47de830c952768ce68", props);
+    let response = await client.issueAsset("98EFF164E39D2304D0E30CD8FC525AF1C93BD918FB6BD3E3C8F179B0E2634F24", props);
     console.log(response);
 }
+testCreateToken();
 */
 
 /*
