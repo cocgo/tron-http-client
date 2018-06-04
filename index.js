@@ -64,14 +64,18 @@ module.exports = class{
      *********** TRON FUNCTIONALITY **************
      ********************************************/
 
+    async broadcastBase64Transaction(base64Signed){
+      let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
+      let decoded = tools.api.returnFromBase64(response.data).toObject();
+      if(decoded && !decoded.result)
+        decoded.message = Buffer.from(decoded.message, 'base64').toString();
+      return decoded;
+    }
+
     async signAndBroadcastTransaction(privateKey, unsigned){
         let signed = tools.transactions.signTransaction(privateKey, unsigned);
         let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
-        let response = await axios.post(this.url + "/grpc/broadcastTransaction", qs.stringify({transaction:base64Signed}));
-        let decoded = tools.api.returnFromBase64(response.data).toObject();
-        if(decoded && !decoded.result)
-            decoded.message = Buffer.from(decoded.message, 'base64').toString();
-        return decoded;
+        return await this.broadcastBase64Transaction(base64Signed);
     }
 
     async sendTrx(privateKey, recipient, amount){
