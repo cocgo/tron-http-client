@@ -201,6 +201,8 @@ async function testSend(){
 testSend();
 */
 
+//D9D54F290E90651A8E67414B2E90B2D21A626554DDAF0A88E76DA0AE12D6C532
+
 /*
 let client = new module.exports();
 async function testCreateToken(){
@@ -208,20 +210,20 @@ async function testCreateToken(){
     let endTime = Date.now() + (60*1000*60*24);
 
     let props = {
-        assetName : "TronWatchTestFrozenSupply",
-        assetAbbr : "TWT2",
+        assetName : "djksaldjaslqwe",
+        assetAbbr : "djaslk",
         totalSupply : 5000000,
         num : 1,
         trxNum : 1,
         endTime : endTime,
         startTime : startTime,
-        description : "test token description here",
-        url : "https://frozen.tron.watch",
+        description : "djskaldjaslk",
+        url : "https://wat.wat",
         frozenSupply: 10000,
         frozenDuration: 5
     };
 
-    let response = await client.issueAsset("98EFF164E39D2304D0E30CD8FC525AF1C93BD918FB6BD3E3C8F179B0E2634F24", props);
+    let response = await client.issueAsset("049A25D79EBF8CD5C616F51AB752F5BEBF2CC5E5151DFD92CC10323DDCB4CDD4", props);
     console.log(response);
 }
 testCreateToken();
