@@ -207,7 +207,7 @@ text-encoding@^0.6.4:
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
 tron-http-tools@tronwatch/tron-http-tools:
-  version "1.0.22"
+  version "1.0.21"
   resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/d0276030aa73e33f62942f48c4eaa5ac545121a7"
   dependencies:
     assert "^1.4.1"

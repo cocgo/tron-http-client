@@ -201,7 +201,6 @@ async function testSend(){
 testSend();
 */
 
-
 /*
 let client = new module.exports();
 async function testCreateToken(){
@@ -218,10 +217,8 @@ async function testCreateToken(){
         startTime : startTime,
         description : "test token description here",
         url : "https://frozen.tron.watch",
-        frozenSupply : {
-            amount : 10000,
-            days : 5
-        }
+        frozenSupply: 10000,
+        frozenDuration: 5
     };
 
     let response = await client.issueAsset("98EFF164E39D2304D0E30CD8FC525AF1C93BD918FB6BD3E3C8F179B0E2634F24", props);
