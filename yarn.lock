@@ -206,6 +206,19 @@ text-encoding@^0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
+tron-http-tools@tronwatch/tron-http-tools:
+  version "1.0.25"
+  resolved "https://codeload.github.com/tronwatch/tron-http-tools/tar.gz/9a340caba6ce2254ec2927dedd31d040f2121da6"
+  dependencies:
+    assert "^1.4.1"
+    bip39 "2.3.0"
+    btoa "^1.2.1"
+    elliptic "^6.4.0"
+    google-protobuf "^3.5.0"
+    js-sha3 "^0.7.0"
+    sha256 "^0.2.0"
+    text-encoding "^0.6.4"
+
 unorm@^1.3.3:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/unorm/-/unorm-1.4.1.tgz#364200d5f13646ca8bcd44490271335614792300"

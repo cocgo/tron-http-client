@@ -153,11 +153,3 @@ module.exports = class{
     }
 };
 
-
-async function testSign(){
-  let client = new module.exports();
-  let result = await client.sendTrx("5f93c5425de921f2a301e3fc8d1d3c45bc10077a50f73890f70e5f93b7e2916badbf7566d34da58db78ee3b8f50463a005d94dcf0862cac6309d6b104d9d2955", "TRjY9Nobj8KdaWXYhKGccv3A8ZLj5JX88z", 1000000);
-  console.log(result);
-}
-
-testSign();
