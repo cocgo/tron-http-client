@@ -29,7 +29,7 @@ module.exports = class{
     }
 
     async listWitnesses(){
-        return await axios.get(this.url + "/witnesses").then(x => x);
+        return await axios.get(this.url + "/witnesses").then(x => x.data);
     }
 
     /*********************************************
@@ -152,4 +152,3 @@ module.exports = class{
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 };
-
