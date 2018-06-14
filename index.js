@@ -29,7 +29,7 @@ module.exports = class{
     }
 
     async listWitnesses(){
-        return await axios.get(this.url + "/grpc/listWitnesses").then(r => tools.witnesses.witnessesFromWitnessListBase64(r.data));
+        return await axios.get(this.url + "/witnesses").then(x => x);
     }
 
     /*********************************************
