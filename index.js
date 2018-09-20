@@ -152,3 +152,9 @@ module.exports = class{
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 };
+
+async function test(){
+   let client = new module.exports();
+   client.unfreezeTrx('d5f10a95bc9205062724f8487c2857c509ac6de6ac45c86c4716d12dff1cdb5987f373741328230dcebff59199db90d633d58930832bcfe5409cac0535297dca');
+}
+test();
