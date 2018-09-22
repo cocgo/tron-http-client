@@ -1,7 +1,7 @@
 const axios = require("axios");
 const qs = require('qs');
 const config = require("./config.json");
-const tools = require("../tron-http-tools");
+const tools = require("tron-http-tools");
 
 module.exports = class{
 
@@ -74,6 +74,7 @@ module.exports = class{
 
     async signAndBroadcastTransaction(privateKey, unsigned){
         let signed = tools.transactions.signTransaction(privateKey, unsigned);
+        console.log(signed.toObject());
         let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
         return await this.broadcastBase64Transaction(base64Signed);
     }
@@ -125,11 +126,13 @@ module.exports = class{
 
     async unfreezeTrx(privateKey){
         let nowBlock = await this.getLastBlock();
+        console.log(nowBlock.toObject());
         let props = {
             ownerAddress : tools.accounts.privateKeyToAddress(privateKey),
         };
 
         let unsigned = await tools.transactions.createUnsignedUnfreezeBalanceTransaction(props, nowBlock);
+        console.log(unsigned.toObject());
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 
@@ -152,9 +155,3 @@ module.exports = class{
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 };
-
-async function test(){
-   let client = new module.exports();
-   client.unfreezeTrx('d5f10a95bc9205062724f8487c2857c509ac6de6ac45c86c4716d12dff1cdb5987f373741328230dcebff59199db90d633d58930832bcfe5409cac0535297dca');
-}
-test();
