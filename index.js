@@ -5,8 +5,8 @@ const tools = require("tron-http-tools");
 
 module.exports = class{
 
-    constructor(){
-        this.url = config.api_url;
+    constructor(url_ = config.api_url){
+        this.url = url_;
     }
 
     /*********************************************
