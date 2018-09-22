@@ -74,7 +74,6 @@ module.exports = class{
 
     async signAndBroadcastTransaction(privateKey, unsigned){
         let signed = tools.transactions.signTransaction(privateKey, unsigned);
-        console.log(signed.toObject());
         let base64Signed = tools.utils.base64EncodeToString(signed.serializeBinary());
         return await this.broadcastBase64Transaction(base64Signed);
     }
@@ -126,13 +125,11 @@ module.exports = class{
 
     async unfreezeTrx(privateKey){
         let nowBlock = await this.getLastBlock();
-        console.log(nowBlock.toObject());
         let props = {
             ownerAddress : tools.accounts.privateKeyToAddress(privateKey),
         };
 
         let unsigned = await tools.transactions.createUnsignedUnfreezeBalanceTransaction(props, nowBlock);
-        console.log(unsigned.toObject());
         return this.signAndBroadcastTransaction(privateKey, unsigned);
     }
 
