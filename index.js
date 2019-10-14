@@ -55,6 +55,9 @@ module.exports = class{
     async getTransactionsRelatedToThis(address){
         return await axios.get(this.url + "/getTransactionsRelatedToThis?address=" + address).then(x => x.data);
     }
+    async getTransactionsRelatedToThis2(address, start, end){
+        return await axios.get(this.url + "/getTransactionsRelatedToThis?address=" + address + "&start=" + start + "&end=" + end).then(x => x.data);
+    }
 
     async getTokens(){
         return await axios.get(this.url + "/getTokens").then(x => x.data);
